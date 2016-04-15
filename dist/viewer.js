@@ -5,7 +5,7 @@
  * Copyright (c) 2015-2016 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2016-03-11T07:57:59.486Z
+ * Date: 2016-04-15T10:47:01.686Z
  */
 
 (function (factory) {
@@ -1164,6 +1164,12 @@
 
       x = num(x);
       y = num(y);
+
+      var marginX = this.viewer.width - this.image.width;
+      var marginY = this.viewer.height - this.image.height;
+
+      x = Math.min(Math.max(x, Math.min(marginX, 0)), Math.max(marginX, 0));
+      y = Math.min(Math.max(y, Math.min(marginY, 0)), Math.max(marginY, 0));
 
       if (this.isViewed && !this.isPlayed && this.options.movable) {
         if (isNumber(x)) {
