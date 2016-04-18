@@ -281,8 +281,6 @@
             pageY: _event.pageY || originalEvent.pageY || 0
           };
 
-
-
           // Zoom from the triggering point of the event
           if (newWidth > this.viewer.width){
             image.left -= (newWidth - width) * (

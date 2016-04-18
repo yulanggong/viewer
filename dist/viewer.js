@@ -5,7 +5,7 @@
  * Copyright (c) 2015-2016 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2016-04-18T05:36:14.150Z
+ * Date: 2016-04-18T05:46:15.303Z
  */
 
 (function (factory) {
@@ -1261,8 +1261,6 @@
             pageX: _event.pageX || originalEvent.pageX || 0,
             pageY: _event.pageY || originalEvent.pageY || 0
           };
-
-
 
           // Zoom from the triggering point of the event
           if (newWidth > this.viewer.width){
