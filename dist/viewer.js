@@ -5,7 +5,7 @@
  * Copyright (c) 2015-2016 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: 2016-04-15T10:47:01.686Z
+ * Date: 2016-04-18T05:36:14.150Z
  */
 
 (function (factory) {
@@ -511,7 +511,7 @@
       var viewer = this.viewer;
       var footerHeight = this.$footer.height();
       var viewerWidth = viewer.width;
-      var viewerHeight = max(viewer.height - footerHeight, footerHeight);
+      var viewerHeight = viewer.canvasHeight = max(viewer.height - footerHeight, footerHeight);
       var oldImage = this.image || {};
 
       getImageSize($image[0], $.proxy(function (naturalWidth, naturalHeight) {
@@ -1166,10 +1166,19 @@
       y = num(y);
 
       var marginX = this.viewer.width - this.image.width;
-      var marginY = this.viewer.height - this.image.height;
+      var marginY = this.viewer.canvasHeight - this.image.height;
 
-      x = Math.min(Math.max(x, Math.min(marginX, 0)), Math.max(marginX, 0));
-      y = Math.min(Math.max(y, Math.min(marginY, 0)), Math.max(marginY, 0));
+      if (marginX < 0){
+        x = min(max(x, marginX), 0);
+      } else {
+        x = marginX / 2;
+      }
+
+      if (marginY < 0){
+        y = min(max(y, marginY), 0);
+      } else {
+        y = marginY / 2;
+      }
 
       if (this.isViewed && !this.isPlayed && this.options.movable) {
         if (isNumber(x)) {
@@ -1253,13 +1262,23 @@
             pageY: _event.pageY || originalEvent.pageY || 0
           };
 
+
+
           // Zoom from the triggering point of the event
-          image.left -= (newWidth - width) * (
-            ((center.pageX - offset.left) - image.left) / width
-          );
-          image.top -= (newHeight - height) * (
-            ((center.pageY - offset.top) - image.top) / height
-          );
+          if (newWidth > this.viewer.width){
+            image.left -= (newWidth - width) * (
+                ((center.pageX - offset.left) - image.left) / width
+              );
+          } else {
+            image.left = (this.viewer.width - newWidth) / 2;
+          }
+          if (newHeight > this.viewer.canvasHeight){
+            image.top -= (newHeight - height) * (
+                ((center.pageY - offset.top) - image.top) / height
+              );
+          } else {
+            image.top = (this.viewer.canvasHeight - newHeight) / 2;
+          }
         } else {
 
           // Zoom from the center of the image

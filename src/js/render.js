@@ -106,7 +106,7 @@
       var viewer = this.viewer;
       var footerHeight = this.$footer.height();
       var viewerWidth = viewer.width;
-      var viewerHeight = max(viewer.height - footerHeight, footerHeight);
+      var viewerHeight = viewer.canvasHeight = max(viewer.height - footerHeight, footerHeight);
       var oldImage = this.image || {};
 
       getImageSize($image[0], $.proxy(function (naturalWidth, naturalHeight) {
